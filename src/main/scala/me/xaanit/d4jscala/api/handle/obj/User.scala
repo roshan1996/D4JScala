@@ -51,8 +51,10 @@ class User(private[api] val user: IUser) {
   def getPresence: Presence = user.getPresence.toWrappedPresence
 
   def getNicknameForGuild(guild: Guild): Option[String] = {
-    val nickname: String = user.getNicknameForGuild(guild.guild)
-    if (nickname == null) None else Some[String](nickname)
+    user.getNicknameForGuild(guild.guild) match {
+      case null => None
+      case x => Some[String](x)
+    }
   }
 
   def getDiscriminator: String = user.getDiscriminator
